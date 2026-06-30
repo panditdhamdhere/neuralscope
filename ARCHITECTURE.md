@@ -331,9 +331,9 @@ flowchart TB
 | **M11** ✅ | Production hardening: CORS, rate limits, RBAC, auth middleware |
 | **M12** ✅ | RAG pipeline + Qdrant vector indexing and semantic search |
 | **M13** ✅ | Git commit history, deployment ingest, and correlation UI |
-| **M14** | MCP server exposure |
+| **M14** ✅ | MCP stdio server exposing observability tools |
 | **M15** | E2E tests in CI |
 
-## Future: MCP Integration
+## MCP Integration
 
-NeuralScope will expose an MCP server allowing AI assistants (Cursor, Claude Desktop) to query observability data directly. The tool registry in the `ai` module is designed to be reusable as MCP tool definitions.
+NeuralScope exposes an MCP server (`neuralscope-mcp`) for Cursor and Claude Desktop. See [docs/MCP.md](./docs/MCP.md).

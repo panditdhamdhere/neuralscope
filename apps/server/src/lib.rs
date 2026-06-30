@@ -13,6 +13,7 @@ pub mod events;
 pub mod git;
 pub mod incidents;
 pub mod logs;
+pub mod mcp;
 pub mod metrics;
 pub mod network;
 pub mod overview;
