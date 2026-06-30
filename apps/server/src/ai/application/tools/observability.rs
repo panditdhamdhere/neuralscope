@@ -244,15 +244,17 @@ impl AiTool for SearchDeploymentsTool {
     }
 
     fn description(&self) -> &str {
-        "Search deployment history and Git commit correlations. Returns recent deployments with commit SHAs and environments."
+        "Search Git commit history and deployment records. Returns recent commits and deployments with correlation metadata."
     }
 
     fn parameters_schema(&self) -> Value {
         json!({
             "type": "object",
             "properties": {
-                "environment": { "type": "string", "description": "Filter by environment (production, staging)" },
-                "limit": { "type": "integer", "description": "Max results (default 10)" }
+                "search": { "type": "string", "description": "Search commit messages or authors" },
+                "environment": { "type": "string", "description": "Filter deployments by environment" },
+                "branch": { "type": "string", "description": "Filter commits by branch" },
+                "limit": { "type": "integer", "description": "Max results per section (default 10)" }
             }
         })
     }
@@ -264,8 +266,29 @@ impl AiTool for SearchDeploymentsTool {
             .unwrap_or(10)
             .clamp(1, 50);
         let environment = args.get("environment").and_then(|v| v.as_str());
+        let branch = args.get("branch").and_then(|v| v.as_str());
+        let search = args.get("search").and_then(|v| v.as_str());
 
-        let rows = sqlx::query_as::<_, DeploymentRow>(
+        let commits = sqlx::query_as::<_, CommitRow>(
+            r#"
+            SELECT sha, author, message, branch, committed_at
+            FROM git_commits
+            WHERE project_id = $1
+              AND ($2::text IS NULL OR branch = $2)
+              AND ($3::text IS NULL OR message ILIKE '%' || $3 || '%' OR author ILIKE '%' || $3 || '%')
+            ORDER BY committed_at DESC
+            LIMIT $4
+            "#,
+        )
+        .bind(self.project_id)
+        .bind(branch)
+        .bind(search)
+        .bind(limit)
+        .fetch_all(&self.pool)
+        .await
+        .map_err(|e| ToolError::ExecutionFailed(e.to_string()))?;
+
+        let deployments = sqlx::query_as::<_, DeploymentRow>(
             r#"
             SELECT commit_sha, environment, deployed_by, deployed_at
             FROM deployments
@@ -282,8 +305,22 @@ impl AiTool for SearchDeploymentsTool {
         .await
         .map_err(|e| ToolError::ExecutionFailed(e.to_string()))?;
 
-        serde_json::to_string(&rows).map_err(|e| ToolError::ExecutionFailed(e.to_string()))
+        let payload = json!({
+            "commits": commits,
+            "deployments": deployments,
+        });
+
+        serde_json::to_string(&payload).map_err(|e| ToolError::ExecutionFailed(e.to_string()))
     }
+}
+
+#[derive(serde::Serialize, sqlx::FromRow)]
+struct CommitRow {
+    sha: String,
+    author: String,
+    message: String,
+    branch: String,
+    committed_at: chrono::DateTime<chrono::Utc>,
 }
 
 #[derive(serde::Serialize, sqlx::FromRow)]

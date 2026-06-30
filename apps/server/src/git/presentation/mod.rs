@@ -1,1 +1,4 @@
-// Handlers added in Milestone 8.
+mod handlers;
+mod routes;
+
+pub use routes::routes;

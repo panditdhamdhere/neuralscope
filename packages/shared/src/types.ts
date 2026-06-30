@@ -272,3 +272,25 @@ export interface ProjectOverview {
   serverStatus: string;
 }
 
+export interface GitCommit {
+  id: string;
+  projectId: string;
+  sha: string;
+  author: string;
+  message: string;
+  branch: string;
+  committedAt: string;
+}
+
+export interface GitDeployment {
+  id: string;
+  projectId: string;
+  commitSha: string;
+  environment: string;
+  deployedBy?: string;
+  deployedAt: string;
+  commitMessage?: string;
+  commitAuthor?: string;
+  commitBranch?: string;
+}
+

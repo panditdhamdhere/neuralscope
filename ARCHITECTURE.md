@@ -330,7 +330,7 @@ flowchart TB
 | **M10** ✅ | Dashboard polish, CI/CD, K8s manifests |
 | **M11** ✅ | Production hardening: CORS, rate limits, RBAC, auth middleware |
 | **M12** ✅ | RAG pipeline + Qdrant vector indexing and semantic search |
-| **M13** | Git history integration |
+| **M13** ✅ | Git commit history, deployment ingest, and correlation UI |
 | **M14** | MCP server exposure |
 | **M15** | E2E tests in CI |
 

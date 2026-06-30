@@ -128,6 +128,10 @@ The server starts on `http://localhost:8080`:
 | `POST /api/v1/projects/:id/vectors/index` | Index code/docs for semantic search (RAG) |
 | `POST /api/v1/projects/:id/vectors/search` | Semantic vector search |
 | `GET /api/v1/projects/:id/vectors/status` | Embedding provider + Qdrant status |
+| `GET /api/v1/projects/:id/git/commits` | List Git commits |
+| `POST /api/v1/projects/:id/git/commits` | Ingest a commit record |
+| `GET /api/v1/projects/:id/git/deployments` | List deployments with commit correlation |
+| `POST /api/v1/projects/:id/git/deployments` | Record a deployment event |
 
 Set `GEMINI_API_KEY` (or `GROQ_API_KEY` / `OPENROUTER_API_KEY` with `AI_DEFAULT_PROVIDER`) to enable chat.
 

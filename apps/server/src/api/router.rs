@@ -7,6 +7,7 @@ use crate::architecture::presentation::architecture_routes;
 use crate::auth::presentation::auth_routes;
 use crate::chat::presentation::routes as chat_routes;
 use crate::events::presentation::ws_handler;
+use crate::git::presentation::routes as git_routes;
 use crate::incidents::presentation::incident_routes;
 use crate::logs::presentation::log_routes;
 use crate::metrics::presentation::metric_routes;
@@ -52,4 +53,5 @@ fn v1_routes(state: &AppState) -> Router<AppState> {
         .merge(incident_routes())
         .merge(overview_routes())
         .merge(vector_routes())
+        .merge(git_routes())
 }
