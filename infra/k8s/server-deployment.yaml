@@ -17,8 +17,8 @@ spec:
     spec:
       containers:
         - name: server
-          image: neuralscope/server:latest
-          imagePullPolicy: IfNotPresent
+          image: ghcr.io/panditdhamdhere/neuralscope/server:main
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
           envFrom:

@@ -12,7 +12,7 @@
     "dev:web": "npm run dev --workspace=@neuralscope/web",
     "dev:server": "cargo run --manifest-path apps/server/Cargo.toml",
     "build": "npm run build --workspaces --if-present",
-    "lint": "npm run lint --workspaces --if-present",
+    "lint": "npm run lint --workspace=@neuralscope/web",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "test": "cargo test --manifest-path apps/server/Cargo.toml",
     "ci": "npm run typecheck && npm run lint && npm run test",

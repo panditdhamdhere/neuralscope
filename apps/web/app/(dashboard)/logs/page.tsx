@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
 import { LogViewer } from "@/features/logs/log-viewer";
 import { useProjectSession } from "@/hooks/use-project-session";
 

@@ -1,13 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   Activity,
   AlertTriangle,
   Bot,
   GitBranch,
   LayoutDashboard,
+  LogOut,
   Network,
   ScrollText,
   Settings,
@@ -16,6 +17,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useProjectSession } from "@/hooks/use-project-session";
+import { signOut } from "@/lib/auth-client";
 
 const navigation = [
   { name: "Overview", href: "/overview", icon: LayoutDashboard },
@@ -33,7 +35,13 @@ const navigation = [
 
 export function Sidebar() {
   const pathname = usePathname();
+  const router = useRouter();
   const { project, loading } = useProjectSession();
+
+  async function handleSignOut() {
+    await signOut();
+    router.push("/login");
+  }
 
   return (
     <aside className="flex h-screen w-60 flex-col border-r border-zinc-800/50 bg-zinc-950/80 backdrop-blur-xl">
@@ -67,13 +75,21 @@ export function Sidebar() {
         })}
       </nav>
 
-      <div className="border-t border-zinc-800/50 p-3">
+      <div className="space-y-2 border-t border-zinc-800/50 p-3">
         <div className="glass rounded-lg px-3 py-2">
           <p className="text-xs text-zinc-500">Project</p>
           <p className="truncate text-sm font-medium text-zinc-300">
             {loading ? "Loading..." : (project?.name ?? "No project")}
           </p>
         </div>
+        <button
+          type="button"
+          onClick={() => void handleSignOut()}
+          className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-zinc-500 transition-colors hover:bg-zinc-800/50 hover:text-zinc-300"
+        >
+          <LogOut className="h-4 w-4 shrink-0" />
+          Sign out
+        </button>
       </div>
     </aside>
   );

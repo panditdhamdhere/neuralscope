@@ -1,0 +1,37 @@
+# Production overlay — use with:
+#   docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+#
+# Required: set strong secrets in .env before starting (see docs/DEPLOYMENT.md).
+
+services:
+  postgres:
+    restart: unless-stopped
+
+  redis:
+    restart: unless-stopped
+
+  qdrant:
+    restart: unless-stopped
+
+  server:
+    restart: unless-stopped
+    environment:
+      APP_ENV: production
+      RUN_MIGRATIONS: "false"
+      RUST_LOG: neuralscope=info,tower_http=info,sqlx=warn
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 512M
+
+  web:
+    restart: unless-stopped
+    environment:
+      APP_ENV: production
+      NODE_ENV: production
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 256M

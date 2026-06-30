@@ -36,7 +36,9 @@ playwright-report/
 
 # Rust
 **/*.rs.bk
-Cargo.lock
+
+# TypeScript
+*.tsbuildinfo
 
 # Turbo
 .turbo/

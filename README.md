@@ -153,6 +153,20 @@ docker build -f infra/docker/Dockerfile.web \
   -t neuralscope/web:latest .
 ```
 
+### Production deployment
+
+See [docs/DEPLOYMENT.md](./docs/DEPLOYMENT.md) for the full production checklist, Docker Compose overlay, Kubernetes steps, and GHCR image workflow.
+
+Quick production start:
+
+```bash
+# Run migrations once
+docker compose run --rm server neuralscope-server --migrate-only
+
+# Start with production settings (no auto-migrate on server)
+docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+```
+
 ### Production hardening
 
 | Control | Env / config |

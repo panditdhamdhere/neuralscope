@@ -14,3 +14,5 @@ data:
   RATE_LIMIT_BURST: "30"
   BETTER_AUTH_URL: https://app.example.com
   NEXT_PUBLIC_APP_URL: https://app.example.com
+  NEXT_PUBLIC_API_URL: https://app.example.com
+  NEXT_PUBLIC_WS_URL: wss://app.example.com/ws

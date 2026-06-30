@@ -17,8 +17,8 @@ spec:
     spec:
       containers:
         - name: web
-          image: neuralscope/web:latest
-          imagePullPolicy: IfNotPresent
+          image: ghcr.io/panditdhamdhere/neuralscope/web:main
+          imagePullPolicy: Always
           ports:
             - containerPort: 3000
           envFrom:
@@ -28,13 +28,13 @@ spec:
                 name: neuralscope-secrets
           livenessProbe:
             httpGet:
-              path: /
+              path: /api/health
               port: 3000
             initialDelaySeconds: 15
             periodSeconds: 20
           readinessProbe:
             httpGet:
-              path: /
+              path: /api/health
               port: 3000
             initialDelaySeconds: 10
             periodSeconds: 10

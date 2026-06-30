@@ -85,7 +85,7 @@ jobs:
         run: npm run typecheck
 
       - name: Lint
-        run: npm run lint
+        run: npm run lint --workspace=@neuralscope/web
 
       - name: Build
         run: npm run build --workspace=@neuralscope/web
