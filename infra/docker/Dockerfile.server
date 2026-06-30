@@ -4,9 +4,11 @@ WORKDIR /app
 
 # Dependency cache layer
 COPY apps/server/Cargo.toml apps/server/Cargo.lock ./
-RUN mkdir src && echo "fn main() {}" > src/main.rs \
+RUN mkdir -p src/bin \
+    && echo "fn main() {}" > src/main.rs \
+    && echo "fn main() {}" > src/bin/mcp.rs \
     && cargo build --release \
-    && rm -rf src target/release/deps/neuralscope_server*
+    && rm -rf src target/release/deps/neuralscope*
 
 COPY apps/server/src ./src
 COPY apps/server/migrations ./migrations
@@ -23,6 +25,7 @@ RUN apt-get update \
 WORKDIR /app
 
 COPY --from=builder /app/target/release/neuralscope-server /usr/local/bin/neuralscope-server
+COPY --from=builder /app/target/release/neuralscope-mcp /usr/local/bin/neuralscope-mcp
 COPY --from=builder /app/migrations /app/migrations
 
 USER appuser

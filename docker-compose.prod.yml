@@ -28,7 +28,8 @@ services:
   web:
     restart: unless-stopped
     environment:
-      APP_ENV: production
+      # Use staging locally (production enables secure cookies requiring HTTPS)
+      APP_ENV: staging
       NODE_ENV: production
     deploy:
       resources:
