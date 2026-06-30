@@ -108,7 +108,7 @@ impl AppConfig {
             environment,
             run_migrations,
             ai_default_provider: env::var("AI_DEFAULT_PROVIDER")
-                .unwrap_or_else(|_| "gemini".into()),
+                .unwrap_or_else(|_| "groq".into()),
             gemini_api_key: env::var("GEMINI_API_KEY").ok().filter(|k| !k.is_empty()),
             groq_api_key: env::var("GROQ_API_KEY").ok().filter(|k| !k.is_empty()),
             openrouter_api_key: env::var("OPENROUTER_API_KEY")
@@ -222,7 +222,7 @@ mod tests {
             server_port: 8080,
             environment: Environment::Development,
             run_migrations: true,
-            ai_default_provider: "gemini".into(),
+            ai_default_provider: "groq".into(),
             gemini_api_key: None,
             groq_api_key: None,
             openrouter_api_key: None,
@@ -259,7 +259,7 @@ mod tests {
             server_port: 8080,
             environment: Environment::Production,
             run_migrations: false,
-            ai_default_provider: "gemini".into(),
+            ai_default_provider: "groq".into(),
             gemini_api_key: None,
             groq_api_key: None,
             openrouter_api_key: None,

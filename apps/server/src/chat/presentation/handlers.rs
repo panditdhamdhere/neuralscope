@@ -40,7 +40,7 @@ pub async fn chat_completion(
         .as_ref()
         .ok_or_else(|| {
             AppError::Internal(
-                "AI provider not configured. Set GEMINI_API_KEY or configure AI_DEFAULT_PROVIDER."
+                "AI provider not configured. Set GROQ_API_KEY or configure AI_DEFAULT_PROVIDER."
                     .into(),
             )
         })?

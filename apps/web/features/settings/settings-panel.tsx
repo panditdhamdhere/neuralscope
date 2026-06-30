@@ -185,7 +185,8 @@ export function SettingsPanel({ token }: SettingsPanelProps) {
       <section className="glass rounded-xl p-6">
         <h2 className="text-sm font-medium text-white">Integrations</h2>
         <ul className="mt-3 space-y-2 text-sm text-zinc-400">
-          <li>GEMINI_API_KEY — AI chat and incident reports</li>
+          <li>GROQ_API_KEY — AI chat and incident reports (default provider)</li>
+          <li>GEMINI_API_KEY — optional if AI_DEFAULT_PROVIDER=gemini</li>
           <li>JINA_API_KEY — Vector embeddings (optional)</li>
           <li>Configure via <code className="text-zinc-500">.env</code> for local dev or K8s secrets in production</li>
         </ul>

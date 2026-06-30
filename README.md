@@ -28,7 +28,7 @@ Ask questions about your application in natural language. NeuralScope gathers co
 |-------|-------------|
 | Backend | Rust, Axum, Tokio, SQLx, PostgreSQL, Redis |
 | Frontend | Next.js, React 19, TypeScript, Tailwind CSS v4, shadcn/ui |
-| AI | Gemini (default), Groq, OpenRouter, Ollama |
+| AI | Groq (default), Gemini, OpenRouter, Ollama |
 | Vector DB | Qdrant |
 | Auth | Better Auth |
 | Infra | Docker, Docker Compose, Kubernetes |
@@ -133,7 +133,7 @@ The server starts on `http://localhost:8080`:
 | `GET /api/v1/projects/:id/git/deployments` | List deployments with commit correlation |
 | `POST /api/v1/projects/:id/git/deployments` | Record a deployment event |
 
-Set `GEMINI_API_KEY` (or `GROQ_API_KEY` / `OPENROUTER_API_KEY` with `AI_DEFAULT_PROVIDER`) to enable chat.
+Set `GROQ_API_KEY` (default) or `GEMINI_API_KEY` / `OPENROUTER_API_KEY` with `AI_DEFAULT_PROVIDER` to enable chat.
 
 ### Kubernetes
 

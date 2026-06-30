@@ -73,7 +73,7 @@ Put nginx or Caddy in front for HTTPS. Route `/api`, `/health`, `/ready`, `/ws` 
 
 ```bash
 cp infra/k8s/secret.yaml.example infra/k8s/secret.yaml
-# Edit with real DATABASE_URL, REDIS_URL, BETTER_AUTH_SECRET, GEMINI_API_KEY
+# Edit with real DATABASE_URL, REDIS_URL, BETTER_AUTH_SECRET, GROQ_API_KEY
 kubectl apply -f infra/k8s/secret.yaml
 ```
 

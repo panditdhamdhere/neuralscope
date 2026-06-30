@@ -53,9 +53,11 @@ services:
         value: https://neuralscope-web.onrender.com
       - key: BETTER_AUTH_SECRET
         generateValue: true
+      - key: AI_DEFAULT_PROVIDER
+        value: groq
       - key: QDRANT_URL
         sync: false
-      - key: GEMINI_API_KEY
+      - key: GROQ_API_KEY
         sync: false
 
   # Next.js web dashboard
@@ -87,5 +89,3 @@ services:
         value: wss://neuralscope-api.onrender.com/ws
       - key: NEXT_PUBLIC_APP_URL
         value: https://neuralscope-web.onrender.com
-      - key: GEMINI_API_KEY
-        sync: false
