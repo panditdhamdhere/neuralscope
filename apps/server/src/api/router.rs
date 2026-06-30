@@ -1,4 +1,5 @@
 use axum::{
+    extract::DefaultBodyLimit,
     middleware::from_fn,
     routing::get,
     Router,
@@ -37,6 +38,7 @@ pub fn create_router(state: AppState) -> Router {
         }))
         .layer(CookieManagerLayer::new())
         .layer(TraceLayer::new_for_http())
+        .layer(DefaultBodyLimit::max(2 * 1024 * 1024))
         .layer(cors)
 }
 

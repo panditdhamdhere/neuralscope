@@ -10,8 +10,8 @@ spec:
       restartPolicy: OnFailure
       containers:
         - name: migrate
-          image: neuralscope/server:latest
-          imagePullPolicy: IfNotPresent
+          image: ghcr.io/panditdhamdhere/neuralscope/server:main
+          imagePullPolicy: Always
           args: ["--migrate-only"]
           envFrom:
             - configMapRef:
