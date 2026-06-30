@@ -13,7 +13,8 @@ export const auth = betterAuth({
   baseURL: process.env.BETTER_AUTH_URL ?? process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000",
   emailAndPassword: {
     enabled: true,
-    requireEmailVerification: process.env.APP_ENV === "production",
+    // Opt-in only — Render/free deploys have no SMTP; verification blocks signup silently.
+    requireEmailVerification: process.env.REQUIRE_EMAIL_VERIFICATION === "true",
   },
   session: {
     expiresIn: 60 * 60 * 24 * 7,

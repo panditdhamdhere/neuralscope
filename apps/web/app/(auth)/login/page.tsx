@@ -27,6 +27,13 @@ export default function LoginPage() {
           setError(result.error.message ?? "Registration failed");
           return;
         }
+        if (!result.data?.token && result.data?.user && !result.data.user.emailVerified) {
+          setError(
+            "Account created. Check your email to verify before signing in, or ask your admin to disable email verification.",
+          );
+          setMode("login");
+          return;
+        }
       } else {
         const result = await signIn.email({ email, password });
         if (result.error) {
