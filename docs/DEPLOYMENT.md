@@ -16,6 +16,10 @@ Before going live, verify every item:
 - [ ] TLS terminated at ingress or reverse proxy
 - [ ] `.env` never committed to git
 
+## Render (recommended for first deploy)
+
+See [docs/DEPLOY-RENDER.md](./DEPLOY-RENDER.md) for step-by-step deployment to Render with the included `render.yaml` blueprint.
+
 ## Docker Compose (single host)
 
 ### 1. Configure environment

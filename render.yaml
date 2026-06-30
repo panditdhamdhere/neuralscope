@@ -1,0 +1,87 @@
+# NeuralScope — Render Blueprint
+# Docs: docs/DEPLOY-RENDER.md
+#
+# Deploy: Render Dashboard → New → Blueprint → connect GitHub repo
+
+databases:
+  - name: neuralscope-db
+    databaseName: neuralscope
+    user: neuralscope
+    plan: basic-256mb
+    region: oregon
+
+services:
+  # Redis-compatible cache
+  - type: keyvalue
+    name: neuralscope-redis
+    plan: free
+    region: oregon
+    ipAllowList: []
+
+  # Rust API server
+  - type: web
+    name: neuralscope-api
+    runtime: docker
+    plan: starter
+    region: oregon
+    dockerfilePath: ./infra/docker/Dockerfile.server
+    dockerContext: .
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: neuralscope-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: keyvalue
+          name: neuralscope-redis
+          property: connectionString
+      - key: APP_ENV
+        value: production
+      - key: RUN_MIGRATIONS
+        value: "false"
+      - key: SERVER_HOST
+        value: 0.0.0.0
+      - key: CORS_ALLOWED_ORIGINS
+        value: https://neuralscope-web.onrender.com
+      - key: BETTER_AUTH_URL
+        value: https://neuralscope-web.onrender.com
+      - key: BETTER_AUTH_SECRET
+        generateValue: true
+      - key: QDRANT_URL
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+
+  # Next.js web dashboard
+  - type: web
+    name: neuralscope-web
+    runtime: docker
+    plan: starter
+    region: oregon
+    dockerfilePath: ./infra/docker/Dockerfile.web
+    dockerContext: .
+    healthCheckPath: /api/health
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: neuralscope-db
+          property: connectionString
+      - key: APP_ENV
+        value: production
+      - key: BETTER_AUTH_URL
+        value: https://neuralscope-web.onrender.com
+      - key: BETTER_AUTH_SECRET
+        fromService:
+          type: web
+          name: neuralscope-api
+          envVarKey: BETTER_AUTH_SECRET
+      - key: NEXT_PUBLIC_API_URL
+        value: https://neuralscope-api.onrender.com
+      - key: NEXT_PUBLIC_WS_URL
+        value: wss://neuralscope-api.onrender.com/ws
+      - key: NEXT_PUBLIC_APP_URL
+        value: https://neuralscope-web.onrender.com
+      - key: GEMINI_API_KEY
+        sync: false

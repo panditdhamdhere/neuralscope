@@ -101,9 +101,10 @@ impl AppConfig {
             qdrant_url: env::var("QDRANT_URL").unwrap_or_else(|_| "http://localhost:6333".into()),
             server_host: env::var("SERVER_HOST").unwrap_or_else(|_| "0.0.0.0".into()),
             server_port: env::var("SERVER_PORT")
+                .or_else(|_| env::var("PORT"))
                 .unwrap_or_else(|_| "8080".into())
                 .parse()
-                .map_err(|e| anyhow::anyhow!("Invalid SERVER_PORT: {e}"))?,
+                .map_err(|e| anyhow::anyhow!("Invalid SERVER_PORT/PORT: {e}"))?,
             environment,
             run_migrations,
             ai_default_provider: env::var("AI_DEFAULT_PROVIDER")
